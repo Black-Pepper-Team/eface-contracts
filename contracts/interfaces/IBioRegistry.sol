@@ -3,16 +3,17 @@ pragma solidity 0.8.16;
 
 /**
  * @title IBioRegistry
- * @notice This is an interface for contract that works as an auxilary tool for the State Contract to
- * store necessary information about the user's public snapshot of the biometric.
+ * @notice Interface for the BioRegistry contract, serving as an auxiliary tool for the State Contract.
+ * It stores and manages users' biometric data.
  */
 interface IBioRegistry {
     /**
-     * @notice Structure that represents user data.
-     * @param uuid - unique identifier of the user. It is needed ... TODO.
-     * @param userAddress - address of the user. I can be replaced ... TODO.
-     * @param f -TODO.
-     * @param metadata - link to the IPFS where TODO.
+     * @notice Defines the structure representing user biometric data.
+     * @dev BiometricData struct holds all relevant information regarding a user's biometric identity.
+     * @param uuid Unique identifier of the user, linking them to their biometric data.
+     * @param userAddress Ethereum address of the user. This can be updated by proving ownership of the UUID via trusted issuers.
+     * @param biometricInfo Raw representation of the user's biometric data.
+     * @param userMetadata Additional metadata associated with the user.
      */
     struct BiometricData {
         string uuid;
@@ -22,12 +23,17 @@ interface IBioRegistry {
     }
 
     /**
-     * @notice Function to register user account.
+     * @notice Registers a user's account by linking it with a UUID.
+     * @param uuid_ The unique identifier of the user.
+     * @param account_ The address of the user's account to be registered.
      */
     function registerAccount(string memory uuid_, address account_) external;
 
     /**
-     * @notice Function to get user data by UUID.
+     * @notice Retrieves the biometric data associated with a given UUID.
+     * @param issuerId_ Identifier of the issuer or authority.
+     * @param uuid_ The unique identifier of the user.
+     * @return BiometricData The user's biometric data associated with the specified UUID.
      */
     function getUserByUUID(
         uint256 issuerId_,
@@ -35,12 +41,17 @@ interface IBioRegistry {
     ) external view returns (BiometricData memory);
 
     /**
-     * @notice Function to get user account by UUID.
+     * @notice Retrieves the Ethereum account address associated with a given UUID.
+     * @param uuid_ The unique identifier of the user.
+     * @return address The Ethereum address associated with the user's UUID.
      */
     function getUserAccountByUUID(string memory uuid_) external view returns (address);
 
     /**
-     * @notice Function to get user data by address.
+     * @notice Retrieves metadata associated with a user's address.
+     * @param issuerId_ Identifier of the issuer or authority.
+     * @param userAddress_ The Ethereum address of the user.
+     * @return string Metadata associated with the user's address.
      */
     function getMetadataByUser(
         uint256 issuerId_,
@@ -48,7 +59,11 @@ interface IBioRegistry {
     ) external view returns (string memory);
 
     /**
-     * @notice Function to get user data by F.
+     * @notice Retrieves metadata based on biometric information and user address.
+     * @param issuerId_ Identifier of the issuer or authority.
+     * @param biometricInfo_ Biometric information associated with the user.
+     * @param userAddress_ The Ethereum address of the user.
+     * @return string Metadata associated with the user and the biometric info.
      */
     function getMetadataByFAndUser(
         uint256 issuerId_,
@@ -57,7 +72,9 @@ interface IBioRegistry {
     ) external view returns (string memory);
 
     /**
-     * @notice Function to check if UUID is registered.
+     * @notice Checks whether a UUID has been registered in the system.
+     * @param uuid_ The unique identifier of the user.
+     * @return bool True if the UUID is registered, false otherwise.
      */
     function isUUIDRegistered(string memory uuid_) external view returns (bool);
 }

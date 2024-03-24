@@ -13,6 +13,7 @@ import {IBioRegistry} from "../interfaces/IBioRegistry.sol";
 
 /**
  * @title BioRegistry
+ * @notice Manages biometric data and user identities.
  */
 contract BioRegistry is IBioRegistry, UUPSUpgradeable, OwnableUpgradeable {
     State public stateContract;
@@ -36,11 +37,17 @@ contract BioRegistry is IBioRegistry, UUPSUpgradeable, OwnableUpgradeable {
      */
     uint256[43] private __gap;
 
+    /**
+     * @dev Restricts function access to the account factory.
+     */
     modifier onlyAccountFactory() {
         require(msg.sender == address(accountFactory), "BioRegistry: caller is not the factory");
         _;
     }
 
+    /**
+     * @dev Disables initializer functions to prevent direct contract initialization.
+     */
     constructor() {
         _disableInitializers();
     }
@@ -69,15 +76,15 @@ contract BioRegistry is IBioRegistry, UUPSUpgradeable, OwnableUpgradeable {
     }
 
     /**
-     * @dev Change the state
-     * @param id_ Identity
-     * @param oldState_ Previous identity state
-     * @param newState_ New identity state
-     * @param isOldStateGenesis_ Is the previous state genesis?
-     * @param a_ ZKP proof field
-     * @param b_ ZKP proof field
-     * @param c_ ZKP proof field
-     * @param biometricData_ Biometric data
+     * @dev Changes the state of a user's identity and records their biometric data.
+     * @param id_ User identity identifier.
+     * @param oldState_ Previous identity state.
+     * @param newState_ New identity state.
+     * @param isOldStateGenesis_ Indicates if the previous state is the genesis state.
+     * @param a_ First part of the ZKP proof.
+     * @param b_ Second part of the ZKP proof.
+     * @param c_ Third part of the ZKP proof.
+     * @param biometricData_ Array of biometric data.
      */
     function transitStateAndBiometricData(
         uint256 id_,

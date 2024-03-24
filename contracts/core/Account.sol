@@ -14,7 +14,7 @@ import {IBioRegistry} from "../interfaces/IBioRegistry.sol";
 
 /**
  * @title Account
- * @notice It is basic Smart Account ownership of which is determined by the UUID and the threshold of the trusted issuers
+ * @notice This contract represents a smart account, the ownership of which is determined by a UUID and a threshold of trusted issuers.
  */
 contract Account is IAccount, Initializable, UUPSUpgradeable {
     using SafeERC20 for IERC20;

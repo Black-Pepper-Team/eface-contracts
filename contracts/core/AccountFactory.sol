@@ -14,7 +14,8 @@ import {IBioRegistry} from "../interfaces/IBioRegistry.sol";
 import {IAccountFactory} from "../interfaces/IAccountFactory.sol";
 
 /**
- * @title AccountFactory contract
+ * @title AccountFactory
+ * @notice Manages the creation and deployment of Account contracts using deterministic method.
  */
 contract AccountFactory is IAccountFactory, OwnableUpgradeable, UUPSUpgradeable {
     IBioRegistry public bioRegistry;
