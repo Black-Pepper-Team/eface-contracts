@@ -89,7 +89,7 @@ contract BioRegistry is IBioRegistry, UUPSUpgradeable, OwnableUpgradeable {
         uint256[2] memory c_,
         IBioRegistry.BiometricData[] memory biometricData_
     ) external {
-        //        stateContract.transitState(id_, oldState_, newState_, isOldStateGenesis_, a_, b_, c_);
+        stateContract.transitState(id_, oldState_, newState_, isOldStateGenesis_, a_, b_, c_);
 
         uint256 arrayLength_ = biometricData_.length;
         for (uint256 i = 0; i < arrayLength_; ++i) {

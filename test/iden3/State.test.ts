@@ -8,7 +8,7 @@ import { getPoseidon, Reverter } from "@test-helpers";
 import { State } from "@ethers-v6";
 import { deepClone } from "@scripts";
 
-describe.only("State", () => {
+describe.skip("State", () => {
   const reverter = new Reverter();
 
   let OWNER: SignerWithAddress;

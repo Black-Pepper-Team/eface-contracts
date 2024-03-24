@@ -53,6 +53,8 @@ contract AccountFactory is IAccountFactory, OwnableUpgradeable, UUPSUpgradeable 
         uint256 threshold,
         bytes32 salt_
     ) external returns (address) {
+        validateAccountCreation(uuid_, trustedIssuers_);
+
         bytes memory data_ = abi.encodeWithSelector(
             Account.__Account_init.selector,
             bioRegistry,
@@ -98,6 +100,23 @@ contract AccountFactory is IAccountFactory, OwnableUpgradeable, UUPSUpgradeable 
         );
 
         return Create2.computeAddress(combinedSalt_, bytecodeHash);
+    }
+
+    /**
+     * @notice Function to validate account creation.
+     * Account can only be created by user that is set in trusted issuers.
+     */
+    function validateAccountCreation(
+        string memory uuid_,
+        uint256[] memory trustedIssuers_
+    ) public view {
+        uint256 arrayLength_ = trustedIssuers_.length;
+        for (uint256 i = 0; i < arrayLength_; i++) {
+            require(
+                msg.sender == bioRegistry.getUserByUUID(trustedIssuers_[i], uuid_).userAddress,
+                "AccountFactory: Account can be created only by user that is set in trusted issuers"
+            );
+        }
     }
 
     function _register(string memory uuid_, address userAccount_) private {

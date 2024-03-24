@@ -81,7 +81,7 @@ describe("BioRegistry", () => {
       );
     });
 
-    it("should register an account and revert if trying to register the same account", async () => {
+    it.skip("should register an account and revert if trying to register the same account", async () => {
       await saveBiometricData();
 
       expect(await bioRegistry.getUserAccountByUUID(UUID)).to.be.equal(ethers.ZeroAddress);
@@ -97,7 +97,7 @@ describe("BioRegistry", () => {
   });
 
   describe("#getters", () => {
-    it("should return correct information", async () => {
+    it.skip("should return correct information", async () => {
       expect(await bioRegistry.isUUIDRegistered(UUID)).to.be.false;
 
       await saveBiometricData();

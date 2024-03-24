@@ -84,6 +84,19 @@ describe("AccountFactory", () => {
         .to.emit(accountFactory, "AccountCreated")
         .withArgs(UUID, predictedAccountAddress);
     });
+
+    it("should revert if trying to create account by not account owner", async () => {
+      await bioRegistryMock.saveBiometricDataMock(ISSUER_ID, {
+        uuid: UUID,
+        userAddress: USER.address,
+        biometricInfo: "0x",
+        userMetadata: "metadata",
+      });
+
+      await expect(
+        accountFactory.connect(OWNER).createAccountWithSalt(UUID, [ISSUER_ID], 1, ethers.ZeroHash),
+      ).to.be.rejectedWith("AccountFactory: Account can be created only by user that is set in trusted issuers");
+    });
   });
 
   describe("#upgradeImpleemntation", () => {
