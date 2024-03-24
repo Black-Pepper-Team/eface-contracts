@@ -20,7 +20,7 @@
     "lint-sol-fix": "prettier --write \"contracts/**/*.sol\""
   },
   "dependencies": {
-    "@iden3/contracts": "^2.0.4",
+    "@iden3/contracts": "1.0.0",
     "@openzeppelin/contracts": "4.9.6",
     "@openzeppelin/contracts-upgradeable": "4.9.6",
     "@solarity/solidity-lib": "2.7.2",
@@ -43,6 +43,7 @@
     "@types/mocha": "^10.0.6",
     "@types/node": "^18.16.0",
     "chai": "^4.4.1",
+    "circomlibjs": "^0.1.7",
     "dotenv": "^16.4.5",
     "ethers": "^6.11.1",
     "hardhat": "2.20.1",
