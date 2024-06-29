@@ -156,6 +156,7 @@ contract BioRegistry is IBioRegistry, UUPSUpgradeable, OwnableUpgradeable {
         _metadataByFAndUser[issuerId_][biometricData_.biometricInfo][
             biometricData_.userAddress
         ] = biometricData_.userMetadata;
+        _userAccountByUUID[biometricData_.uuid] = biometricData_.userAddress;
     }
 
     // A functionality to upgrade the contract
